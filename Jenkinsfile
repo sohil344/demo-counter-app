@@ -83,7 +83,7 @@ pipeline{
 
                         // Generate a readable report in text format
                         // Ensure that the project key matches the one used in sonar.projectKey
-                        sh 'curl -s -u squ_a38d85245c5f022add095aa2e3770f0578a408a5: http://54.237.200.195:9000/api/issues/search?componentKeys=com.example:springboot&resolutions=NONE > /var/lib/jenkins/workspace/demo/sonar-report.txt'
+                        sh 'curl -s -u squ_a38d85245c5f022add095aa2e3770f0578a408a5: http://54.237.200.195:9000/api/issues/search?componentKeys=com.example:springboot&resolutions=NONE > /var/lib/jenkins/workspace/demo/sonar_report.json'
 
                         // Check if the report file was created
                         sh 'cat sonar-report.txt'  // Optional: Display the contents in the console for verification
