@@ -58,7 +58,18 @@ pipeline{
                     
                 }
             }
-            
+             stage('Generate SonarQube Report') {
+            steps {
+                script {
+                    // Assuming SonarQube server is configured to allow report generation
+                    // This command might vary depending on your SonarQube configuration
+                    withSonarQubeEnv(credentialsId: 'sonar-api') {
+                        // Run the Sonar analysis command
+                        sh 'mvn sonar:sonar -Dproject.settings=sonar-project.properties'
+                    }
+                }
+            }
+        }
         }
         
 }
