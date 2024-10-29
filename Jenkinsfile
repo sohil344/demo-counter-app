@@ -77,7 +77,7 @@ pipeline {
         always {
             echo 'Sending analysis report via email...'
             emailext (
-                to: "sohildoshi333@gmail.com",
+                to: "harshadarajput32@gmail.com",
                 subject: "SonarQube Analysis Report for ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: "The SonarQube analysis report for ${env.JOB_NAME} Build #${env.BUILD_NUMBER} is attached.\nPlease review the attached report for code quality and security findings.",
                 attachLog: true,
