@@ -66,7 +66,7 @@ pipeline {
 
                     sh 'curl -s -u squ_a38d85245c5f022add095aa2e3770f0578a408a5: http://54.237.200.195:9000/api/issues/search?componentKeys=com.example:springboot&resolutions=NONE > sonar_report.json'
 
-                    sh 'ls -la sonar_report.json' // This will list the file details
+                    sh 'ls -la sonar_report.json'
                 }
             }
         }
@@ -80,7 +80,7 @@ pipeline {
                 subject: "SonarQube Analysis Report for ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: "The SonarQube analysis report for ${env.JOB_NAME} Build #${env.BUILD_NUMBER} is attached.\nPlease review the attached report for code quality and security findings.",
                 attachLog: true,
-                attachmentsPattern: ''**/sonar_report.json'
+                attachmentsPattern: 'sonar_report.json'
             )
         }
     }
