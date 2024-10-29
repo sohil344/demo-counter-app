@@ -58,13 +58,38 @@ pipeline{
                     
                 }
             }
-             stage('Generate SonarQube Report') {
-            steps {
-                script {
-                    sh 'mvn sonar:sonar -Dsonar.host.url=http://54.237.200.195:9000/ -Dsonar.login=squ_a38d85245c5f022add095aa2e3770f0578a408a5'
+
+            stage('Generate SonarQube Report') {
+                steps {
+                    script {
+                        // Set up SonarQube properties, if needed
+                        def sonarProperties = """
+                        sonar.projectKey=com.example:springboot
+                        sonar.projectName=springboot
+                        sonar.projectVersion=1.0
+                        sonar.sources=src/main/java
+                        sonar.tests=src/test/java
+                        sonar.java.binaries=target/classes
+                        """
+
+                        // Write SonarQube properties to a file (optional)
+                        writeFile file: 'sonar-project.properties', text: sonarProperties
+
+                        // Execute the SonarQube analysis with credentials
+                        withSonarQubeEnv(credentialsId: 'sonar-api') {
+                            // Run the Sonar analysis command
+                            sh 'mvn sonar:sonar -Dproject.settings=sonar-project.properties'
+                        }
+
+                        // Generate a readable report in text format
+                        // Ensure that the project key matches the one used in sonar.projectKey
+                        sh 'curl -s -u squ_a38d85245c5f022add095aa2e3770f0578a408a5: http://54.237.200.195:9000/api/issues/search?componentKeys=com.example:springboot&resolutions=NONE > sonar-report.txt'
                     }
                 }
             }
+
+            
+             
         }
         }
         
